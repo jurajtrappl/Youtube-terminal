@@ -4,24 +4,28 @@
 - Quick approach to trending videos on youtube
 
 # HELP
-Script simulating youtube in the unix terminal.
-  Search and play the videos, create a playlist.
-  Search:
-  	./ytv.sh what to search
-  		: searches for "what to search" in youtube
-  Options:
-  	-t
-  		: lists trending videos
-  	-h|--help
-  		: usage
-  	-d:
-  		:downloads the video
-  Additional searching results
-  		We can let the script show us more than default number of searches (10)
+## Search:
+
+./ytv.sh what to search
+
+    searches for "what to search" in youtube
+
+## Options:
+    -t   
+      : lists trending videos
+    -h|--help     
+      : usage
+    -d
+      : downloads the video
+
+## Additional searching results
+
+We can let the script show us more than default number of searches (10)
   		using key m. (additional 10, after "Select the number:")
-  Playlists options:
-  	+p
-  		:selected video is added to the playlist
+
+## Playlists options:
+  	+p   
+       : selected video is added to the playlist
   	-pp
   		:plays videos in the playlist
   	-p n
