@@ -47,9 +47,11 @@ checkInternet(){
 loadConfig(){
   if [ -f ~/.config/ytv ]; then
     #change default settings from config
-    player=`cat ~/.config/ytv |grep -o "player=[a-z]*" |cut -d "=" -f 2`
     downloadTool=`cat ~/.config/ytv |grep -o "downloadTool=[a-z]*" |cut -d "=" -f 2`
     numOfSearches=`cat ~/.config/ytv |grep -o "numOfSearches=[0-9]*" |cut -d "=" -f 2`
+    #this options happens to contain bugs since youtube-dl is updating too often
+    #and then players have problem, vlc is recommended the most
+    #player=`cat ~/.config/ytv |grep -o "player=[a-z]*" |cut -d "=" -f 2`
   fi
 }
 
@@ -70,7 +72,7 @@ query=`echo $query |sed 's/#/%23/g'`
 yt=`echo "https://www.youtube.com/results?search_query=$query"`
 
 #download web page
-$downloadTool -s $yt -o "index.html"
+$downloadTool -s "$yt" -o "index.html"
 mv index.html ~/.cache/ytv
 }
 
@@ -136,7 +138,7 @@ playVideo(){
 
   #play the video
   numUrl=`cat -n ~/.cache/ytv/urls | sed "${num}q;d" | cut -d "/" -f 2`
-  $player "http://www.youtube.com/$numUrl" > /dev/null 2>&1 &
+  vlc http://www.youtube.com/"$numUrl"
 }
 
 #shows searched videos
@@ -183,7 +185,7 @@ clearPlaylist(){
 
 #plays the whole playlist
 playPlaylist(){
-  cat playlist |cut -d "-" -f 1 |xargs $player
+  cat playlist |cut -d "-" -f 1 |xargs -i $player "{}"
 }
 
 #adds url - name to the playlist (option +p)
@@ -234,7 +236,7 @@ checkInternet
 
 #config file : ~/.config/ytv
 #default config options
-player=mkv
+player=vlc
 downloadTool=wget
 numOfSearches=5
 loadConfig
